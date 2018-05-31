@@ -1,0 +1,132 @@
+<html>
+<head>
+  <link rel="stylesheet" href="bootstrap.min.css" >
+<script>
+
+function showUser(str) {
+   
+        xmlhttp = new XMLHttpRequest();
+     
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("txtHint").innerHTML = this.responseText;
+            }
+        };
+        xmlhttp.open("GET","getcustomer.php?q="+str,true);
+        xmlhttp.send();
+        
+    }
+</script>
+</head>
+
+<body>
+ 
+<p><i>This web page shows how to enter data using forms without refreshing the web page and how data is retrieved from the database while entering a unique id while using ajax for getting relevant data without refereshing the web page</i></p>
+<form class="form-horizontal" method="POST" id="form">
+<fieldset>
+
+<!-- Form Name -->
+<legend><h2><u>Personal Details</u></h2></legend>
+<!-- <p><i>Please enter your personal details below.</i></p> -->
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="fn">First Name</label>  
+  <div class="col-md-4">
+  <input id="clr" name="fn" type="text" placeholder="First Name" class="form-control input-md" required="">
+    
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="textinput">Last Name</label>  
+  <div class="col-md-4">
+  <input id="clr" name="ln" type="text" placeholder="Last Name" class="form-control input-md" required="">
+    
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="ag">Age</label>  
+  <div class="col-md-4">
+  <input id="clr" name="ag" type="text" placeholder="Age" class="form-control input-md" required="">
+    
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="ht">Home Town</label>  
+  <div class="col-md-4">
+  <input id="clr" name="ht" type="text" placeholder="Home Town" class="form-control input-md" required="">
+    
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="jb">Job</label>  
+  <div class="col-md-4">
+  <input id="clr" name="jb" type="text" placeholder="Job" class="form-control input-md" required="">
+    
+  </div>
+</div>
+<div class="form-group">
+  <label class="col-md-4 control-label" for="submit"></label>
+  <div class="col-md-4">
+    <input type="submit"  value="Submit" name="submit" class="btn btn-primary">
+    <button id="btnrst" name="btnrst" class="btn btn-danger" onclick="document.getElementByClassName('clr').value = ''">Reset</button>
+  </div>
+</div>
+</fieldset>
+</form>
+<script type="text/javascript" src="jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+  $('#form').submit(function(e){
+    e.preventDefault();
+    $.ajax({
+      type:'POST',
+      url:'customer.php',
+      data:$('#form').serialize(),
+      success:function(response){
+        console.log(response);
+      }
+
+    });
+    var form=document.getElementById('form').reset();
+  });
+</script>
+</form>
+</fieldset>
+
+
+<fieldset>
+
+<!-- Form Name -->
+<legend><h2><u>View Details</u></h2></legend>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="textinput">Enter ID</label>  
+  <div class="col-md-4">
+  <input id="id" name="rst" type="text" placeholder="please enter ID here" class="form-control input-md rst">
+    
+  </div>
+</div>
+
+<!-- Button -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="submit"></label>
+  <div class="col-md-4">
+    <button id="submit" name="submit" class="btn btn-primary" onclick="showUser(getElementById('id').value) " >View</button>
+     <button id="btnrst" name="btnrst" class="btn btn-danger" onclick="document.getElementById('id').value =''">Reset</button>
+  </div>
+
+</div>
+<div id="txtHint">Below shows the data from the database <br></div>
+</fieldset>
+
+</body>
+</html>
